@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html>
+<head> <title> Yahtzee </title> 
+<!--	Name:	Dom Carrillo
+Course:	235.02
+HomeWork:	#2
+Git-Hub:	https://github.com/yourName/yourHomeWork
+-->	
+
+
+
+<style type ="text/css">
+<!--
+    h1 {font-size:30pt;
+        text-align:center;}
+    div.a {text-align: center;}
+    table.a{margin-left:auto;
+            margin-right:auto;}
+    td.a{text-align:right;}
+    td.b{ border:1px outset #676767;  
+          background-color: #AEAEFF; 
+          width: 2em;}
+    td.c{ 
+        width: 100px;
+        text-align: center;
+    }
+
+    button.a
+    {
+        font-family: "Times New Roman";
+        font-size: 16pt;
+        color: #f4d6e8;
+        background-color: #5701ce ;
+    }
+        
+    
+    -->
+</style>
+
+</head>
+
+<body>
+
+<script language = "JavaScript">
+<!--
+        
+    
+
+    var tries = 0;
+    
+    var v = new Array(0,0,0,0,0);
+    var x = new Array(false,false,false,false,false);
+    var f = new Array(0,0,0,0,0,0,0);
+    var z = new Array(0,0,0,0,0,0,0,0,0);
+
+    var lock = new Array(false,false,false,false,false,false,false,false,false,false);
+
+
+
+    // f[2] to rep how many 2s
+    
+    function roll()
+    {
+
+
+        if(tries<3)
+        {
+        
+            f[1]=f[2]=f[3]=f[4]=f[5]=f[6]=0;
+
+            for(var i=0; i<5;i++)
+            {
+                if(!x[i])
+                {
+                    var d = document.getElementById("d"+i);
+                    v[i] = Math.floor(6*Math.random()) + 1 ; 
+                    d.src="pix/dice"+v[i]+".gif";
+                }
+            f[v[i]]++;
+
+            }
+            tries++;
+        }
+
+    }
+
+    function h(i)
+    {
+        var t = document.getElementById("d"+i);
+        x[i] = !x[i]
+        if(x[i])
+        {
+            t.src="pix/diceX"+v[i]+".gif";
+        }
+        else
+        {
+            t.src="pix/dice"+v[i]+".gif";
+        }
+
+    }
+    
+    function clr(k)
+    {
+        if(lock[k])
+        {
+            return;
+        }
+        document.getElementById("s"+k).innerHTML = "";
+    }
+
+    function scr(k)
+    {
+        if(lock[k])
+        {
+            return;
+        }
+        document.getElementById("s"+k).innerHTML = f[k]*k;
+        z[k-1] = f[k]*k;
+
+
+    }
+
+
+    function kindof3()
+    {
+       
+        var k = document.getElementById("k3");
+
+        if(lock[7])
+        {
+            return;
+        } 
+        
+
+        if(v.sort()[0]==v.sort()[2] || v.sort()[1]==v.sort()[3] || v.sort()[2]==v.sort()[4])
+        {
+           
+            k.innerHTML = v[0]+v[1]+v[2]+v[3]+v[4];
+            z[6] = v[0]+v[1]+v[2]+v[3]+v[4];
+        }
+        else
+        {
+            k.innerHTML = 0;
+        }
+
+    }
+
+    function kindof4()
+    {
+       
+        var k = document.getElementById("k4");
+
+        if(lock[8])
+        {
+            return;
+        } 
+        
+
+        if(v.sort()[0]==v.sort()[3] || v.sort()[1]==v.sort()[4] )
+        {
+        
+            k.innerHTML = v[0]+v[1]+v[2]+v[3]+v[4];
+            z[7] = v[0]+v[1]+v[2]+v[3]+v[4];
+        }
+        else
+        {
+            k.innerHTML = 0;
+        }
+
+    }
+
+    function kindof5()
+    {
+        var k = document.getElementById("k5");
+
+        if(lock[9])
+        {
+            return;
+        } 
+        
+
+        if(v.sort()[0]==v.sort()[4])
+        {
+        
+            k.innerHTML = v[0]+v[1]+v[2]+v[3]+v[4];
+            z[8] = v[0]+v[1]+v[2]+v[3]+v[4];
+        }
+        else
+        {
+            k.innerHTML = 0;
+        }
+
+    }
+
+
+    function kclr(k)
+    {
+        console.log(k)
+        if(lock[k+4])
+        {
+            return;
+        } 
+
+        document.getElementById("k"+k).innerHTML = "";
+    }
+
+    function total()
+    {
+        var t = document.getElementById("total");
+
+        var sum = 0;
+
+        
+        for(var i = 0; i<9; i++)
+        {
+            sum+=z[i];
+        }
+        t.innerHTML = sum;
+        
+
+    }
+
+    function tclr()
+    {
+        document.getElementById("total").innerHTML = "";
+
+    }
+
+
+
+
+    function newGame()
+    {
+        tries=0;
+        for(var i = 0; i<5;i++)
+        {
+            v[i]=0;
+            x[i]=false;
+            document.getElementById("d"+i).src="pix/dice0.gif";
+        }
+
+        for(var i = 0; i <7; i++)
+        {
+            f[i] = 0;
+        }
+
+        for(var i = 0; i <9; i++)
+        {
+            z[i] = 0;
+        }
+
+        for(var i = 0; i <10; i++)
+        {
+            lock[i] = false;
+        }
+
+        for(var i = 1; i<=6; i++)
+        {
+            document.getElementById("s"+i).innerHTML="";
+        }
+
+        for(var i = 3; i<=5; i++)
+        {
+            document.getElementById("k"+i).innerHTML="";
+        }
+
+        
+
+    }
+
+
+    function lck(x)
+    {
+        lock[x] = true;
+    }
+
+
+        
+//-->
+
+
+</script> 
+    <h1>Yahtzee</h1>
+
+
+    <div class="a">
+        <img id="d0" onClick="h(0)" src = "pix/dice0.gif">
+        <img id="d1" onClick="h(1)" src = "pix/dice0.gif">
+        <img id="d2" onClick="h(2)" src = "pix/dice0.gif">
+        <img id="d3" onClick="h(3)" src = "pix/dice0.gif">
+        <img id="d4" onClick="h(4)" src = "pix/dice0.gif">
+
+        </div>
+    
+
+    <table  class="a">
+        <tr><td class = "a">1's</td> 
+            <td class = "b" id="s1" onMouseOver="scr(1)" onMouseOut="clr(1)" onClick="lck(1)">  </td>
+            <td class = "c" rowspan="5"> <button  onClick="roll()" class="a">Roll</button></td></tr>
+       
+        <tr><td class = "a">2's</td> 
+            <td class = "b" id="s2" onMouseOver="scr(2)" onMouseOut="clr(2)" onClick="lck(2)"> </td>
+            
+            </tr>
+            
+
+        <tr><td class = "a">3's</td> 
+            <td class = "b" id="s3" onMouseOver="scr(3)" onMouseOut="clr(3)" onClick="lck(3)">  </td></tr>
+
+
+        <tr><td class = "a">4's</td> 
+            <td class = "b" id="s4" onMouseOver="scr(4)" onMouseOut="clr(4)" onClick="lck(4)">  </td></tr>
+
+
+        <tr><td class = "a">5's</td> 
+            <td class = "b" id="s5" onMouseOver="scr(5)" onMouseOut="clr(5)" onClick="lck(5)">  </td></tr>
+
+
+        <tr><td class = "a">6's</td> 
+            <td class = "b" id="s6" onMouseOver="scr(6)" onMouseOut="clr(6)" onClick="lck(6)">  </td>
+
+
+            <td class = "c" rowspan="5"> <button onClick="newGame()" class="b">New game</button></td></tr>
+
+
+
+        <tr><td class = "a" >3 of a kind</td> 
+            <td class = "b" id="k3" onMouseOver="kindof3()" onMouseOut="kclr(3)" onClick="lck(7)">  </td></tr>
+
+
+        <tr><td class = "a" >4 of a kind</td> 
+            <td class = "b" id="k4" onMouseOver="kindof4()" onMouseOut="kclr(4)" onClick="lck(8)"> </td></tr>
+
+
+        <tr><td class = "a">Yahtzee</td> 
+            <td class = "b" id="k5" onMouseOver="kindof5()" onMouseOut="kclr(5)" onClick="lck(9)"> </td></tr>
+
+
+        <tr><td class = "a">Total</td> 
+            <td class = "b" id="total"onMouseOver="total()" onMouseOut="tclr()"> </td></tr>
+
+
+        </table>
+
+
+
+    </body>
+</html>
